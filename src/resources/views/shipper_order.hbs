@@ -1,0 +1,197 @@
+{{! // RMIT University Vietnam
+// Course: COSC2430 Web Programming
+// Semester: 2023A
+//Assessment: Assignment 2
+//Author: Vo Chau Thang - s3927178, Nguyen Ngoc Kim - s3970589, 
+//        Nguyen Huu Quoc Huy - s3986423, Lam Uy Vu - s3938804, Lee Jae Sung - s3977739
+//Acknowledgement: Acknowledge the resources that you use here. }}
+
+<style>
+    @media only screen and (max-width: 767px) {
+        table td:nth-of-type(1)::before {
+            content: "Order ID";
+            margin: 0;
+            margin-bottom: 5px;
+            margin-right: 50px;
+        }
+
+        table td:nth-of-type(2)::before {
+            content: "Shipping Adress";
+        }
+
+        table td:nth-of-type(3)::before {
+            content: "Customer";
+        }
+
+        table td:nth-of-type(4)::before {
+            content: "Date";
+        }
+
+        table td:nth-of-type(5)::before {
+            content: "Amount";
+        }
+
+        table td:nth-of-type(6)::before {
+            content: "Unit Price";
+        }
+
+        table td:nth-of-type(7)::before {
+            content: "Hub";
+        }
+
+        table td:nth-of-type(8)::before {
+            content: "Delivery";
+        }
+
+        table td:nth-of-type(9)::before {
+            content: "Status";
+        }
+    }
+</style>
+<main>
+
+    <div class="container-fluid" style="padding: 0;">
+        <div class="d-flex justify-content-center align-items-center" style="height: 15vh; background-color: #034266;">
+            <div class="text-white text-center display-1">Order</div>
+        </div>
+    </div>
+
+    <div style="background-color: #8D8C8C;">
+        <input type="checkbox" id="check1" name="check1">
+        <!-- <nav class="container nav1">
+          <ul>
+              <li style="background-color: #DE4F11;"><a href="#">Order</a></li>
+              <li><a href="#">Product</a></li>
+              <li><a href="#">Service</a></li>
+              <li><a href="#">Contact Us</a></li>
+          </ul>
+      </nav> -->
+        <label for="check1" class="checkbtn1">
+            <i class="fa fa-bars"></i>
+            <span class="category-text">CATEGORIES</span>
+        </label>
+    </div>
+
+    <div class="container-fluid" style="margin-top: 50px; display:block; padding: 0;">
+        <div class="white-div align-items-center" style="padding: 0;">
+            <div class="row">
+
+                <div class="col">
+                    <table class="table">
+                        <thead style="background-color: #F6460E;">
+                            <tr style="color: white;">
+                                <th>Order ID</th>
+                                <th>Shipping Adress</th>
+                                <th>Customer</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Unit Price</th>
+                                <th>Hub</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each data}}
+                            <tr>
+                                <td>{{@index}}</td>
+                                <td>{{this.addressShip}}</td>
+                                <td>{{this.nameUser}}</td>
+                                <td>{{formatDate this.createdAt}}</td>
+                                <td>{{this.amount}}</td>
+                                <td>${{this.total}}</td>
+                                <td>{{this.nameHub}}</td>
+                                <td>{{this.status}}</td>
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button"
+                                            id="actionDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Actions
+                                        </button>
+                                        <ul class="dropdown-menu" aria-labelledby="actionDropdown">
+                                            <li><a href="/shipper/getDetail/{{this._id}}"
+                                                    style="text-decoration: none;"><button
+                                                        class="dropdown-item accept-btn">Detail</button></a></li>
+                                            <li><button class="dropdown-item accept-btn" onclick="handleClick('Delivered', '{{this._id}}')">Delivered</button>
+
+                                            </li>
+                                            <li><button class="dropdown-item decline-btn" onclick="handleClick('Canceled', '{{this._id}}')">Canceled</button></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                            {{/each}}
+                            <!-- Add more rows as needed -->
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script>
+        const imageInput = document.getElementById("input-image");
+        const imagePreview = document.getElementById("preview-image");
+
+        imageInput.addEventListener("change", function (event) {
+            const file = event.target.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    imagePreview.src = e.target.result;
+                };
+
+                reader.readAsDataURL(file);
+            } else {
+                imagePreview.src = "#";
+            }
+        });
+
+        function handleUpdateStatus() {
+            alert("Da click")
+            {
+                {
+                    !--axios.post("/shipper/api/updateStatus", { status: status })
+                        .then((response) => {
+                            alert(response.data)
+                            location.reload()
+                        })
+                        .catch((error) => {
+                            alert(error)
+                            location.reload()
+                        }) --}
+            }
+        }
+
+    </script>
+
+    <script>
+        function handleClick(status,id) {
+            // the code to be executed when the button is clicked
+            {{!-- alert("Button clicked!"); --}}
+            axios.post("/shipper/api/updateStatus", { status: status,id:id })
+                .then((response) => {
+                    alert("Success")
+                    location.reload()
+                })
+                .catch((error) => {
+                    alert(error)
+                    location.reload()
+                })
+        }
+    </script>
+    <style>
+        .white-div {
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
+
+
+
+</main>

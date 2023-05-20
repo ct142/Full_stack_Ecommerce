@@ -1,0 +1,63 @@
+{{! // RMIT University Vietnam
+// Course: COSC2430 Web Programming
+// Semester: 2023A
+//Assessment: Assignment 2
+//Author: Vo Chau Thang - s3927178, Nguyen Ngoc Kim - s3970589, 
+//        Nguyen Huu Quoc Huy - s3986423, Lam Uy Vu - s3938804, Lee Jae Sung - s3977739
+//Acknowledgement: Acknowledge the resources that you use here. }}
+
+
+<main>
+  <div style="background-color: #8D8C8C;">
+    <input type="checkbox" id="check1" name="check1" />
+    <nav class="container nav1">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li style="background-color: #DE4F11;"><a href="/product">Product</a></li>
+        <li><a href="/service">Service</a></li>
+        <li><a href="/contact">Contact Us</a></li>
+      </ul>
+    </nav>
+    <label for="check1" class="checkbtn1">
+      <i class="fa fa-bars"></i>
+      <span class="category-text">CATEGORIES</span>
+    </label>
+  </div>
+
+  <!-- collection -->
+
+  <!-- Trending Categories -->
+
+  <!-- Flash Sale -->
+
+  <!-- Simple Mall -->
+
+  <!-- Daily Discover -->
+   <div class="dailyDiscover container">
+    <div class="daily">
+      <h2 class=" mb-2">Daily Discover</h2>
+    </div>
+ <div class="daily-discover row" style="width: 100%;">
+  {{#each products}}
+    <div class="col-lg-2 mt-4">
+      <div class="card">
+          <img src="data:{{this.contentType}};base64,{{this.imageBase64}}" class="card-img-top" alt="...">
+        <div class="card-body">
+<a href ="/products/{{this._id}}">
+              <h5 class="card-title">{{this.name}}</h5>
+          </a>
+                        <p class="card-text">${{this.price}}</p>
+        </div>
+      </div>
+    </div>
+    {{#ifCond @index "%" 6}}
+</div>
+<div class="daily-discover row" style="width: 100%;">
+    {{/ifCond}}
+  {{/each}}
+</div>
+
+
+
+  </div>
+</main>

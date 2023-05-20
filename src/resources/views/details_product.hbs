@@ -1,0 +1,80 @@
+{{! // RMIT University Vietnam
+// Course: COSC2430 Web Programming
+// Semester: 2023A
+//Assessment: Assignment 2
+//Author: Vo Chau Thang - s3927178, Nguyen Ngoc Kim - s3970589, 
+//        Nguyen Huu Quoc Huy - s3986423, Lam Uy Vu - s3938804, Lee Jae Sung - s3977739
+//Acknowledgement: Acknowledge the resources that you use here. }}
+
+<main>
+  <div style="background-color: #8D8C8C;">
+    <input type="checkbox" id="check1" name="check1">
+    <nav class="container nav1">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/product">Product</a></li>
+        <li><a href="/service">Service</a></li>
+        <li><a href="/contact">Contact Us</a></li>
+      </ul>
+    </nav>
+    <label for="check1" class="checkbtn1">
+      <i class="fa fa-bars"></i>
+      <span class="category-text">CATEGORIES</span>
+    </label>
+  </div>
+  <div class="container details" data-product-id={{product._id}}>
+    <div class="left-column">
+      <img src="data:{{product.contentType}};base64,{{product.imageBase64}}" alt="Large image" class="idProduct">
+    </div>
+    <div class="right-column">
+      <h1 class="product-name">{{product.name}}</h1>
+      <div class="rating">
+        <strong>4.0</strong>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star checked"></span>
+        <span class="fa fa-star"></span>
+      </div>
+      <div class="sold">sold: 100</div>
+      <div class="priceProduct">
+        <div class="bprice">$</div>
+        <div class="priceP">{{product.price}}</div>
+      </div>
+      <div class="quantity">
+        <strong>Quantity: </strong>
+        <button class="subtract-button">-</button>
+        <input type="text" class="quantity-input" value="1">
+        <button class="add-button">+</button>
+      </div>
+      <button class="add-to-cart-button">Add to cart</button>
+      <br>
+      <strong>Description: </strong>
+      <div>{{product.description}}</div>
+    </div>
+  </div>
+  <script>
+    console.log({{ product._id }})
+    // Get the product information
+    const product = {
+      id: "{{ product._id }}",
+      price: "{{ product.price }}",
+      count: 1
+    };
+
+    const addToCartButton = document.getElementById("add-to-cart");
+    addToCartButton.addEventListener("click", () => {
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const existingProductIndex = cart.findIndex((item) => item.id === product.id);
+
+      if (existingProductIndex !== -1) {
+        cart[existingProductIndex].count++;
+      } else {
+        cart.push(product);
+      }
+
+      localStorage.setItem("cart", JSON.stringify(cart));
+      location.reload()
+    });
+  </script>
+</main>

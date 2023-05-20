@@ -1,0 +1,176 @@
+{{! // RMIT University Vietnam
+// Course: COSC2430 Web Programming
+// Semester: 2023A
+//Assessment: Assignment 2
+//Author: Vo Chau Thang - s3927178, Nguyen Ngoc Kim - s3970589, 
+//        Nguyen Huu Quoc Huy - s3986423, Lam Uy Vu - s3938804, Lee Jae Sung - s3977739
+//Acknowledgement: Acknowledge the resources that you use here. }}
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Simple</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="icon" href="image/simple_logo.png">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+  {{! <title>Document</title> }}
+  <script src="/js/script.js"></script>
+  <style>
+    @media only screen and (max-width: 767px) {
+      table td:nth-of-type(1)::before {
+        content: "ID";
+        margin: 0;
+        margin-bottom: 5px;
+        margin-right: 50px;
+      }
+
+      table td:nth-of-type(2)::before {
+        content: "Image";
+      }
+
+      table td:nth-of-type(3)::before {
+        content: "Name";
+      }
+
+      table td:nth-of-type(4)::before {
+        content: "Price";
+      }
+
+      table td:nth-of-type(5)::before {
+        content: "Quantity";
+      }
+
+      table td:nth-of-type(6)::before {
+        content: "Action";
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <input type="checkbox" id="check" name="check" />
+    {{#if loggedIn}}
+    <nav class="container d-none">
+      <ul class="left">
+        <li><a href="/vendor/register">Become our vendor</a></li>
+        <li><a href="/customer/register">Become our customers</a></li>
+        <li><a href="/shipper/register">Become our delivery boys</a></li>
+      </ul>
+      <ul class="right">
+        <li><a href="/login">Log in</a></li>
+        <li><a href="/customer/register">Sign up</a></li>
+      </ul>
+    </nav>
+    {{else}}
+    <nav class="container">
+      <ul class="left">
+        <li><a href="/vendor/register">Become our vendor</a></li>
+        <li><a href="/customer/register">Become our customers</a></li>
+        <li><a href="/shipper/register">Become our delivery boys</a></li>
+      </ul>
+      <ul class="right">
+        <li><a href="/login">Log in</a></li>
+        <li><a href="/customer/register">Sign up</a></li>
+      </ul>
+    </nav>
+    {{/if}}
+    <label for="check" class="checkbtn"><i class="fa fa-bars"></i></label>
+
+    <div class="subnav container mb-0">
+      <div class="logo">
+
+        <a href="/">
+          <b>SIMPLE</b>
+        </a>
+      </div>
+      <div class="nav-right">
+        <div class="search">
+          <form method="GET" action="/products/v1/search">
+            <input type="text" id="search" name="query" placeholder="search something here" />
+            <button type="submit"><i class="fa fa-search"></i></button>
+          </form>
+
+        </div>
+        <div class="icons">
+          {{#if Type}}
+          <a href="/products/orders" class="d-none">
+            <div class="cart-icon">
+              <i class="fa fa-shopping-cart"></i>
+              <span class="cart-count">0</span>
+            </div>
+          </a>
+          {{else}}
+          <a href="/products/orders">
+            <div class="cart-icon">
+              <i class="fa fa-shopping-cart"></i>
+              <span class="cart-count">0</span>
+            </div>
+          </a>
+          {{/if}}
+          <a href="/info"><i class="fa fa-user"></i></a>
+        </div>
+        <a href="#" class="menu-toggle"><i class="fa fa-bars"></i></a>
+      </div>
+    </div>
+    <script>
+      // Update the item count function
+      function updateItemCount() {
+        var cartItems = JSON.parse(localStorage.getItem('cart')) || [];
+        var itemCount = cartItems.length;
+
+        // Update the cart count in the DOM
+        var cartCountElement = document.querySelector('.cart-count');
+        cartCountElement.textContent = itemCount;
+      }
+
+      // Call the updateItemCount function initially
+      updateItemCount();
+
+      // Listen for the storage event to trigger the update
+      window.addEventListener('storage', function (event) {
+        // Check if the storage event was triggered by changes to the cart data
+        if (event.key === 'cart') {
+          updateItemCount();
+        }
+      });
+
+    </script>
+  </header>
+  {{{body}}}
+
+  <footer>
+    <div class="container pt-4">
+      <div class="text-center col-12">
+        <p class="mb-0">Buy everything you need, even for your kids, it’s all meet your needs</p>
+      </div>
+      <br>
+      <div class="ft-link text-center col-12">
+        <ul class="list-inline">
+          <li class="list-inline-item"><a href="/contact">About</a></li>
+          <li class="list-inline-item"><a href="#">Copyrights</a></li>
+          <li class="list-inline-item"><a href="#">Privacy</a></li>
+          <li class="list-inline-item"><a href="/helper">Helps</a></li>
+        </ul>
+      </div>
+      <div class="text-center col-12">
+        <p class="mb-0" style="font-size: 12px;">Copyright © 2023. RMIT University. All Rights Reserved</p>
+      </div>
+    </div>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+
+</body>
+
+</html>
