@@ -10,7 +10,10 @@ REFRESH_TOKEN_SECRET="6707470437"
 NODE_ENV=development
 SESSION_SECRET = "session_key"
 Then open the terminal 
--> npm install
--> npm start (localhost:5000)
+npm install
+npm start (localhost:5000)
 # account tester
+vendor: thangvo03  password: Chauthang2003!
+shipper: Chauthang03  password: Chauthang2003!
+customer: thangvo01   password: Chauthang2003!
 
