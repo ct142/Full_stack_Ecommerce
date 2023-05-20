@@ -21,3 +21,6 @@ shipper: Chauthang03  password: Chauthang2003!
 customer: thangvo01   password: Chauthang2003!
           Preditor08  password: Mypassword1@
 
+# Link URL to Video
+https://www.youtube.com/watch?v=FtMpIP-2u78 
+
